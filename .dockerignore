@@ -1,0 +1,35 @@
+# Node modules (will be installed inside container)
+node_modules/
+
+# Git files
+.git
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files (avoid leaking secrets)
+.env
+.env.*
+
+# Build output
+dist/
+build/
+
+# Coverage
+coverage/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
