@@ -18,5 +18,5 @@ ENV NODE_ENV=production
 
 COPY --from=builder /app ./
 
-EXPOSE 7000
-CMD ["node", "index.js"]
+EXPOSE 4000
+CMD ["node", "src/index.js"]
