@@ -22,7 +22,7 @@ app.use('/api', apiRouter);
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on port 4000`));
   } catch (error) {
     console.error('Failed to start server:', error);
   }
