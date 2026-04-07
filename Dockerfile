@@ -1,33 +1,38 @@
-FROM node:25 AS builder
+# ---------- Builder Stage ----------
+FROM node:20 AS builder
 
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
-# Install ALL dependencies (incl dev for build)
+# Install dependencies (including dev)
 RUN npm ci
 
-# Copy source
+# Copy source code
 COPY . .
 
-# Build TypeScript to dist/
+# Build TypeScript
 RUN npm run build
 
-# Production stage
-FROM node:25
+
+# ---------- Production Stage ----------
+FROM node:20
 
 WORKDIR /app
+
 ENV NODE_ENV=production
 
-# Copy built artifacts and prod node_modules (pruned)
+# Copy only required files
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package.json ./
+
+# Install only production deps
+RUN npm install --omit=dev
+
+# Copy env if needed
 COPY --from=builder /app/.env* ./
 
 EXPOSE 4000
 
-# Use npm start (runs node dist/index.js)
-CMD ["npm", "start"]
-
+CMD ["node", "dist/index.js"]
